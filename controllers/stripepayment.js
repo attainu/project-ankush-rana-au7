@@ -1,22 +1,20 @@
-const stripe = require("stripe")(
-  "sk_test_51HZp9MIUT73NPmbJpOeQBQp8KrCFGKfDqraI1YGz4tnGMWhyEDtUSqYJMB3aE94CaRtv0s7Fw6NgPihJ1RN4A3lx00iN4QgiWn"
-);
+const stripe = require("stripe")("LEARNCODEONLINE");
 const uuid = require("uuid/v4");
 exports.makepayment = (req, res) => {
   const { products, token } = req.body;
   console.log("PRODUCTS", products);
 
   let amount = 0;
-  products.map((p) => {
+  products.map(p => {
     amount = amount + p.price;
   });
   const idempotencyKey = uuid();
   return stripe.customers
     .create({
       email: token.email,
-      source: token.id,
+      source: token.id
     })
-    .then((customer) => {
+    .then(customer => {
       stripe.charges
         .create(
           {
@@ -32,16 +30,16 @@ exports.makepayment = (req, res) => {
                 line2: token.card.address_line2,
                 city: token.card.address_city,
                 country: token.card.address_country,
-                postal_code: token.card.address_zip,
-              },
-            },
+                postal_code: token.card.address_zip
+              }
+            }
           },
           {
-            idempotencyKey,
+            idempotencyKey
           }
         )
-        .then((result) => res.status(200).json(result))
-        .catch((err) => console.log(err));
+        .then(result => res.status(200).json(result))
+        .catch(err => console.log(err));
     })
     .catch(console.log("FAILED"));
 };

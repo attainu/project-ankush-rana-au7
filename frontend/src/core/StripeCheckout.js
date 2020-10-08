@@ -4,7 +4,7 @@ import { cartEmpty, loadCart } from "./helper/cartHelper";
 import { Link } from "react-router-dom";
 import StripeCheckoutButton from "react-stripe-checkout";
 import { API } from "../backend";
-import { createOrder } from "./helper/orderHelper";
+createOrder;
 
 const StripeCheckout = ({
   products,
@@ -28,8 +28,7 @@ const StripeCheckout = ({
     });
     return amount;
   };
-
-  const makePayment = (token) => {
+  const makepayment = (token) => {
     const body = {
       token,
       products,
@@ -44,35 +43,12 @@ const StripeCheckout = ({
     })
       .then((response) => {
         console.log(response);
-        //call further methods
-        const { status } = response;
-        console.log("STATUS", status);
-        const orderData = {
-          products: products,
-          transaction_id: response.transaction_id,
-          amount: response.transaction.amount,
-        };
-        createOrder(userId, token, orderData);
-        cartEmpty(() => {
-          console.log("");
-        });
-        setReload(!reload);
       })
       .catch((error) => console.log(error));
   };
-
   const showStripeButton = () => {
     return isAutheticated() ? (
-      <StripeCheckoutButton
-        stripeKey="pk_test_51HZp9MIUT73NPmbJvGXP4C8qvbiPAXy245nCr9J2YtHxUJvpfOlQGVv361UkuSR7sW7J5eD8B1hMieQ1wPFMxO8p00Dt0uqZjo"
-        token={makePayment}
-        amount={getFinalAmount() * 100}
-        name="Buy Tshirts"
-        shippingAddress
-        billingAddress
-      >
-        <button className="btn btn-success">Pay with stripe</button>
-      </StripeCheckoutButton>
+      <button className="btn btn-success">Pay with stripe</button>
     ) : (
       <Link to="/signin">
         <button className="btn btn-warning">Signin</button>

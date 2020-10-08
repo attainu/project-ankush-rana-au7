@@ -11,7 +11,7 @@ const ManageProducts = () => {
   const { user, token } = isAutheticated();
 
   const preload = () => {
-    getProducts().then((data) => {
+    getProducts().then(data => {
       if (data.error) {
         console.log(data.error);
       } else {
@@ -24,8 +24,8 @@ const ManageProducts = () => {
     preload();
   }, []);
 
-  const deleteThisProduct = (productId) => {
-    deleteProduct(productId, user._id, token).then((data) => {
+  const deleteThisProduct = productId => {
+    deleteProduct(productId, user._id, token).then(data => {
       if (data.error) {
         console.log(data.error);
       } else {
@@ -42,7 +42,7 @@ const ManageProducts = () => {
       </Link>
       <div className="row">
         <div className="col-12">
-          <h2 className="text-center text-white my-3">Total products</h2>
+          <h2 className="text-center text-white my-3">Total 3 products</h2>
 
           {products.map((product, index) => {
             return (
