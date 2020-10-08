@@ -6,6 +6,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+app.use(cors());
 
 //My routes
 const authRoutes = require("./routes/auth");
@@ -20,7 +21,7 @@ mongoose
   .connect(process.env.DATABASE, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true
+    useCreateIndex: true,
   })
   .then(() => {
     console.log("DB CONNECTED");
@@ -29,7 +30,6 @@ mongoose
 //Middlewares
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(cors());
 
 //My Routes
 app.use("/api", authRoutes);
